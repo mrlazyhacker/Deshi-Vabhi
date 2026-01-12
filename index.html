@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Desi Hard- Your sexy Video Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #0f0f0f;
+      color: #f1f1f1;
+      line-height: 1.4;
+      overflow-x: hidden;
+    }
+    
+    /* Header / Navbar */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: #0f0f0f;
+      border-bottom: 1px solid #272727;
+      z-index: 1000;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .menu-btn {
+      font-size: 24px;
+      color: #aaa;
+      cursor: pointer;
+      margin-right: 16px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #ff0000;
+    }
+    
+    .search-bar {
+      flex: 1;
+      max-width: 650px;
+      position: relative;
+      margin: 0 24px;
+    }
+    
+    .search-bar input {
+      width: 100%;
+      height: 40px;
+      padding: 0 16px 0 48px;
+      border: 1px solid #303030;
+      border-radius: 40px 0 0 40px;
+      background: #121212;
+      color: white;
+      font-size: 16px;
+    }
+    
+    .search-btn {
+      height: 40px;
+      width: 64px;
+      background: #222;
+      border: 1px solid #303030;
+      border-left: none;
+      border-radius: 0 40px 40px 0;
+      color: #aaa;
+      cursor: pointer;
+    }
+    
+    .header-icons {
+      display: flex;
+      gap: 24px;
+      color: #aaa;
+    }
+    
+    /* Sidebar Drawer */
+    .sidebar {
+      position: fixed;
+      top: 56px;
+      left: -240px;
+      width: 240px;
+      height: calc(100vh - 56px);
+      background: #0f0f0f;
+      border-right: 1px solid #272727;
+      padding: 16px;
+      transition: left 0.3s ease;
+      z-index: 999;
+      overflow-y: auto;
+    }
+    
+    .sidebar.active {
+      left: 0;
+    }
+    
+    .sidebar ul {
+      list-style: none;
+    }
+    
+    .sidebar li {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #f1f1f1;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .sidebar li:hover {
+      background: #272727;
+      border-radius: 8px;
+    }
+    
+    .sidebar li i {
+      font-size: 20px;
+      color: #aaa;
+    }
+    
+    .sidebar-section {
+      margin-bottom: 24px;
+      border-bottom: 1px solid #272727;
+      padding-bottom: 16px;
+    }
+    
+    .sidebar-title {
+      font-size: 13px;
+      color: #aaa;
+      padding: 0 16px 8px;
+      text-transform: uppercase;
+    }
+    
+    /* Main Content */
+    main {
+      margin-top: 56px;
+      padding: 24px 16px;
+      max-width: 1950px;
+      margin-left: auto;
+      margin-right: auto;
+      transition: margin-left 0.3s ease;
+    }
+    
+    body.sidebar-open main {
+      margin-left: 240px;
+    }
+    
+    @media (max-width: 1024px) {
+      body.sidebar-open main {
+        margin-left: 0;
+      }
+    }
+    
+    .categories {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    
+    .category-chip {
+      background: #272727;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #f1f1f1;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    
+    .category-chip:hover {
+      background: #3a3a3a;
+    }
+    
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px 16px;
+    }
+    
+    .video-card {
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    /* Zoom removed - only slight shadow on hover */
+    .video-card:hover {
+      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    }
+    
+    .thumbnail-container {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #1a1a1a;
+    }
+    
+    .thumbnail {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .duration {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0,0,0,0.85);
+      color: white;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .video-info {
+      margin-top: 12px;
+      display: flex;
+      gap: 12px;
+    }
+    
+    .channel-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #333;
+      flex-shrink: 0;
+    }
+    
+    .video-details h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+      line-height: 1.3;
+      font-weight: 500;
+      color: #f1f1f1;
+    }
+    
+    .channel-name,
+    .views-time {
+      font-size: 13px;
+      color: #aaa;
+    }
+    
+    .views-time {
+      margin-top: 4px;
+    }
+    
+    /* Footer */
+    footer {
+      background: #0f0f0f;
+      border-top: 1px solid #272727;
+      padding: 32px 16px;
+      margin-top: 48px;
+      font-size: 13px;
+      color: #aaa;
+    }
+    
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    
+    .footer-section {
+      flex: 1;
+      min-width: 200px;
+    }
+    
+    .footer-section h4 {
+      color: #f1f1f1;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    
+    .footer-section ul {
+      list-style: none;
+    }
+    
+    .footer-section li {
+      margin-bottom: 8px;
+    }
+    
+    .footer-section a {
+      color: #aaa;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .footer-section a:hover {
+      color: #f1f1f1;
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    
+    .social-icons i {
+      font-size: 20px;
+      color: #aaa;
+      cursor: pointer;
+    }
+    
+    .social-icons i:hover {
+      color: #f1f1f1;
+    }
+    
+    .copyright {
+      text-align: center;
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #272727;
+      color: #777;
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .search-bar { max-width: 400px; }
+      .sidebar { width: 240px; left: -240px; }
+    }
+    
+    @media (max-width: 768px) {
+      .search-bar input { padding-left: 16px; }
+      .header-icons i:not(:last-child) { display: none; }
+      .video-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <i class="fas fa-bars menu-btn" onclick="toggleSidebar()"></i>
+  <div class="logo">
+    <i class="fa-brands fa-youtube"></i> Deshi Vabhi
+  </div>
+  
+  <div class="search-bar">
+    <input type="text" placeholder="Search..."/>
+    <button class="search-btn"><i class="fas fa-search"></i></button>
+  </div>
+  
+  <div class="header-icons">
+    <i class="fas fa-video" style="font-size:20px;"></i>
+    <i class="fas fa-bell" style="font-size:20px;"></i>
+    <i class="fas fa-user-circle" style="font-size:28px;"></i>
+  </div>
+</header>
+
+<!-- Sidebar Drawer -->
+<nav class="sidebar">
+  <div class="sidebar-section">
+    <ul>
+      <li><i class="fas fa-home"></i> Home</li>
+      <li><i class="fas fa-fire"></i> Trending</li>
+      <li><i class="fas fa-subscriptions"></i> Subscriptions</li>
+      <li><i class="fas fa-history"></i> History</li>
+    </ul>
+  </div>
+  
+  <div class="sidebar-section">
+    <div class="sidebar-title">Library</div>
+    <ul>
+      <li><i class="fas fa-clock"></i> Watch Later</li>
+      <li><i class="fas fa-thumbs-up"></i> Liked Videos</li>
+      <li><i class="fas fa-play-circle"></i> Playlists</li>
+    </ul>
+  </div>
+  
+  <div class="sidebar-section">
+    <div class="sidebar-title">More</div>
+    <ul>
+      <li><i class="fas fa-music"></i> Music</li>
+      <li><i class="fas fa-gamepad"></i> Gaming</li>
+      <li><i class="fas fa-news"></i> News</li>
+      <li><i class="fas fa-cog"></i> Settings</li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="categories">
+    <div class="category-chip">All</div>
+    <div class="category-chip">Music</div>
+    <div class="category-chip">Gaming</div>
+    <div class="category-chip">News</div>
+    <div class="category-chip">Vlogs</div>
+    <div class="category-chip">Comedy</div>
+    <div class="category-chip">Education</div>
+    <div class="category-chip">Science</div>
+  </div>
+
+  <div class="video-grid">
+
+    <!-- Video 1 -->
+    <div class="video-card">
+      <div class="thumbnail-container">
+        <img class="thumbnail" src="https://k.top4top.io/p_3663vw2ny9.jpg" alt="Thumbnail">
+        <span class="duration">10:53</span>
+      </div>
+      <div class="video-info">
+        <div class="channel-avatar"></div>
+        <div class="video-details">
+          <h3>New Married Couple Having Romantic Sex</h3>
+          <div class="channel-name">Vabhi Hard</div>
+          <div class="views-time">1.2M views • 3 days ago</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video 2 -->
+    <div class="video-card">
+      <div class="thumbnail-container">
+        <img class="thumbnail" src="https://b.top4top.io/p_3663gvhqf0.jpg" alt="Thumbnail">
+        <span class="duration">4:12</span>
+      </div>
+      <div class="video-info">
+        <div class="channel-avatar"></div>
+        <div class="video-details">
+          <h3>Indian Boyfriend Fuck Hard His Hot DESHI Girlfriend</h3>
+          <div class="channel-name">Bangla Sex Hub</div>
+          <div class="views-time">8.7M views • 1 week ago</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video 3 -->
+    <div class="video-card">
+      <div class="thumbnail-container">
+        <img class="thumbnail" src="https://c.top4top.io/p_3663j0dns1.jpg" alt="Thumbnail">
+        <span class="duration">5:45</span>
+      </div>
+      <div class="video-info">
+        <div class="channel-avatar"></div>
+        <div class="video-details">
+          <h3>First Time Sex My College Girlfriend Comes to My House</h3>
+          <div class="channel-name">Hardcore</div>
+          <div class="views-time">500K views • 2 days ago</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video 4 -->
+    <div class="video-card">
+      <div class="thumbnail-container">
+        <img class="thumbnail" src="https://d.top4top.io/p_3663r7u5c2.jpg" alt="Thumbnail">
+        <span class="duration">12:20</span>
+      </div>
+      <div class="video-info">
+        <div class="channel-avatar"></div>
+        <div class="video-details">
+          <h3>Tatted broad goes full nympho!</h3>
+          <div class="channel-name">Sexy</div>
+          <div class="views-time">2.1M views • 5 days ago</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video 5 -->
+    <div class="video-card">
+      <div class="thumbnail-container">
+        <img class="thumbnail" src="https://e.top4top.io/p_3663341yw3.jpg" alt="Thumbnail">
+        <span class="duration">8:30</span>
+      </div>
+      <div class="video-info">
+        <div class="channel-avatar"></div>
+        <div class="video-details">
+          <h3>Double Penetration GangBang with latina slut Sara Retali</h3>
+          <div class="channel-name">Deshi sex</div>
+          <div class="views-time">320K views • 4 days ago</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video 6 to 15 - Using mix of images with different titles -->
+    <div class="video-card">
+      <div class="thumbnail-container">
+        <img class="thumbnail" src="https://f.top4top.io/p_36634iic14.jpg" alt="Thumbnail">
+        <span class="duration">15:10</span>
+      </div>
+      <div class="video-info">
+        <div class="channel-avatar"></div>
+        <div class="video-details">
+          <h3>HOTWIFE XXX - "I Fucked a Stranger and He Came Inside My Pussy" (Nikole Nash)</h3>
+          <div class="channel-name">Sexy With</div>
+          <div class="views-time">980K views • 1 day ago</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="thumbnail-container">
+        <img class="thumbnail" src="https://g.top4top.io/p_3663z9xlr5.jpg" alt="Thumbnail">
+        <span class="duration">3:55</span>
+      </div>
+      <div class="video-info">
+        <div class="channel-avatar"></div>
+        <div class="video-details">
+          <h3>Busty MILF Armani Black Fucked By Big Cock Jmac</h3>
+          <div class="channel-name">Milf</div>
+          <div class="views-time">4.5M views • 2 weeks ago</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="thumbnail-container">
+        <img class="thumbnail" src="https://h.top4top.io/p_3663fkk5z6.jpg" alt="Thumbnail">
+        <span class="duration">7:22</span>
+      </div>
+      <div class="video-info">
+        <div class="channel-avatar"></div>
+        <div class="video-details">
+          <h3>DOUBLE PENETRATION FOR THE FIRST TIME Mells Blanco Wants</h3>
+          <div class="channel-name">sexy King</div>
+          <div class="views-time">1.8M views • 6 days ago</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="thumbnail-container">
+        <img class="thumbnail" src="https://i.top4top.io/p_3663955nm7.jpg" alt="Thumbnail">
+        <span class="duration">9:45</span>
+      </div>
+      <div class="video-info">
+        <div class="channel-avatar"></div>
+        <div class="video-details">
+          <h3>SHE WANTED TO BE FAMOUS - 1000 Bottles Of Babyoil Didn't Save Her Ass´</h3>
+          <div class="channel-name">Kabita</div>
+          <div class="views-time">450K views • 3 days ago</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <div class="thumbnail-container">
+        <img class="thumbnail" src="https://j.top4top.io/p_3663ogox98.jpg" alt="Thumbnail">
+        <span class="duration">6:18</span>
+      </div>
+      <div class="video-info">
+        <div class="channel-avatar"></div>
+        <div class="video-details">
+          <h3>FAMILYXXX - Naomi's Step Dad Gives Her A Huge Surprise</h3>
+          <div class="channel-name">Prank sex</div>
+          <div class="views-time">2.3M views • 1 week ago</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-container">
+    <div class="footer-section">
+      <h4>About</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Copyright</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Creators</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Report</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Download</h4>
+      <ul>
+        <li><a href="#">Download App</a></li>
+        <li><a href="#">Desktop App</a></li>
+      </ul>
+      <div class="social-icons">
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-youtube"></i>
+      </div>
+    </div>
+    
+    <div class="footer-section">
+      <h4>More Info</h4>
+      <ul>
+        <li><a href="#">Accessibility</a></li>
+        <li><a href="#">Language: English</a></li>
+        <li><a href="#">Site Map</a></li>
+        <li><a href="#">Feedback</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="copyright">
+    &copy; 2026 Deshi Hard. All rights reserved. | Built with love.
+  </div>
+</footer>
+
+<script>
+  function toggleSidebar() {
+    document.querySelector('.sidebar').classList.toggle('active');
+    document.body.classList.toggle('sidebar-open');
+  }
+</script>
+
+<!-- ================================================= -->
+<!--          যেকোনো জায়গায় ক্লিক → Login Popup     -->
+<!-- ================================================= -->
+
+<!-- Login Modal / Dialog -->
+<div id="loginModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:#1a1a1a; width:320px; max-width:90%; border-radius:16px; padding:32px 24px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.7); position:relative;">
+    
+    <!-- Close button -->
+    <button onclick="document.getElementById('loginModal').style.display='none'" 
+            style="position:absolute; top:12px; right:16px; background:none; border:none; color:#aaa; font-size:24px; cursor:pointer;">
+      ×
+    </button>
+
+    <!-- Round Image -->
+    <div style="width:110px; height:110px; margin:0 auto 20px; border-radius:50%; overflow:hidden; border:4px solid #ff0044;">
+      <img src="https://h.top4top.io/p_3663zwaav0.jpeg" 
+           alt="Profile" 
+           style="width:100%; height:100%; object-fit:cover;">
+    </div>
+
+    <h2 style="font-size:22px; margin-bottom:12px; color:#fff;">Welcome to Deshi Hard</h2>
+    <p style="color:#aaa; font-size:14px; margin-bottom:28px; line-height:1.4;">
+      Login and enjoy the full content!
+    </p>
+
+    <!-- আগের বাটনটি এভাবে রিপ্লেস করুন -->
+<button onclick="window.location.href='login.html'"
+        style="background:#ff0044; color:white; border:none; padding:14px 0; width:100%; border-radius:50px; font-size:16px; font-weight:bold; cursor:pointer; transition:0.2s;">
+  Access Sexy
+</button>
+  </div>
+</div>
+
+<!-- Script to show modal on any click -->
+<script>
+  document.addEventListener('click', function(e) {
+    // যাতে close button / login button এ ক্লিক করলে আবার না খোলে
+    if (e.target.closest('#loginModal')) return;
+    
+    document.getElementById('loginModal').style.display = 'flex';
+  }, {once: false});
+</script>
+
+</body>
+</html>

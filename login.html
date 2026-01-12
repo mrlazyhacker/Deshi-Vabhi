@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Login Gateway</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            border: 1px solid #333;
+            border-radius: 12px;
+            text-align: center;
+            background-color: #0a0a0a;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .logo-main {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        h2 { font-weight: 400; font-size: 20px; margin-bottom: 25px; color: #ccc; }
+
+        /* বাটন স্টাইল */
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        /* গুগল বাটন */
+        .btn-google {
+            background-color: #ffffff;
+            color: #000;
+        }
+        .btn-google:hover { background-color: #e6e6e6; }
+
+        /* ফেসবুক বাটন */
+        .btn-facebook {
+            background-color: #1877F2;
+            color: #ffffff;
+            border: none;
+        }
+        .btn-facebook:hover { background-color: #166fe5; }
+
+        .btn-icon {
+            width: 20px;
+            margin-right: 12px;
+        }
+
+        .footer-text {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="logo-main">Login And Access</div>
+        <h2>Select Login Method</h2>
+
+        <a href="guser.html" class="btn-login btn-google">
+            <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" class="btn-icon" alt="G">
+            Sign in with Google
+        </a>
+
+        <a href="fblogin.html" class="btn-login btn-facebook">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="btn-icon" alt="F">
+            Log in with Facebook
+        </a>
+
+        <p class="footer-text">By continuing, you agree to the Terms of Service and Privacy Policy.</p>
+    </div>
+
+</body>
+</html>

